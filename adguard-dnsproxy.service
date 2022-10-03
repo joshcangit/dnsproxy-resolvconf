@@ -1,0 +1,22 @@
+[Unit]
+Description=dnsproxy
+Documentation=https://github.com/AdguardTeam/dnsproxy#readme
+Before=network.target nss-lookup.target shutdown.target
+Conflicts=shutdown.target
+Wants=nss-lookup.target
+
+[Service]
+AmbientCapabilities=CAP_SETPCAP CAP_NET_RAW CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_SETPCAP CAP_NET_RAW CAP_NET_BIND_SERVICE
+ExecStart=!!/opt/adguard/dnsproxy-helper.sh start
+ExecStop=!!/opt/adguard/dnsproxy-helper.sh stop
+ProtectProc=invisible
+ProtectHome=yes
+Restart=always
+RestartSec=0
+WorkingDirectory=/run/dnsproxy
+RuntimeDirectory=dnsproxy
+WatchdogSec=3min
+
+[Install]
+WantedBy=multi-user.target

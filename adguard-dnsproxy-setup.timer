@@ -1,0 +1,12 @@
+[Unit]
+Description=Daily updates for dnsproxy
+Requires=network-online.target
+After=network-online.target
+
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=3600
+Persistent=true
+
+[Install]
+WantedBy=timers.target
