@@ -43,14 +43,14 @@ endif
 start:
 ifeq ($(shell id -u), 0)
     @systemctl enable --now adguard-dnsproxy-setup.timer
-ifdef $(find $(BINDIR) -name dnsproxy)
+    ifdef $(find $(BINDIR) -name dnsproxy)
 	@systemctl enable --now adguard-dnsproxy.service
 endif
 else
     @sudo systemctl enable --now adguard-dnsproxy-setup.timer
-ifdef $(find $(BINDIR) -name dnsproxy)
+    ifdef $(find $(BINDIR) -name dnsproxy)
 	@sudo systemctl enable --now adguard-dnsproxy.service
-endif
+    endif
 endif
 
 stop:
