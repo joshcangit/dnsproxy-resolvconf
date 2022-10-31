@@ -42,12 +42,12 @@ endif
 
 start:
 ifeq ($(shell id -u), 0)
-@systemctl enable --now adguard-dnsproxy-setup.timer
+    @systemctl enable --now adguard-dnsproxy-setup.timer
 ifdef $(find $(BINDIR) -name dnsproxy)
 	@systemctl enable --now adguard-dnsproxy.service
 endif
 else
-@sudo systemctl enable --now adguard-dnsproxy-setup.timer
+    @sudo systemctl enable --now adguard-dnsproxy-setup.timer
 ifdef $(find $(BINDIR) -name dnsproxy)
 	@sudo systemctl enable --now adguard-dnsproxy.service
 endif
@@ -55,13 +55,13 @@ endif
 
 stop:
 ifeq ($(shell id -u), 0)
-@systemctl disable --now adguard-dnsproxy-setup.timer
-@systemctl disable adguard-dnsproxy-setup.service
-@systemctl disable --now adguard-dnsproxy.service
+    @systemctl disable --now adguard-dnsproxy-setup.timer
+    @systemctl disable adguard-dnsproxy-setup.service
+    @systemctl disable --now adguard-dnsproxy.service
 else
-@sudo systemctl disable --now adguard-dnsproxy-setup.timer
-@sudo systemctl disable adguard-dnsproxy-setup.service
-@sudo systemctl disable --now adguard-dnsproxy.service
+    @sudo systemctl disable --now adguard-dnsproxy-setup.timer
+    @sudo systemctl disable adguard-dnsproxy-setup.service
+    @sudo systemctl disable --now adguard-dnsproxy.service
 endif
 
 uninstall: stop
