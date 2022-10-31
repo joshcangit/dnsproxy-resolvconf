@@ -16,7 +16,6 @@ Restart=always
 RestartSec=0
 WorkingDirectory=/run/dnsproxy
 RuntimeDirectory=dnsproxy
-WatchdogSec=3min
 
 [Install]
 WantedBy=multi-user.target
