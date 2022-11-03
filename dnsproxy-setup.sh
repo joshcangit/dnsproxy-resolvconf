@@ -1,6 +1,6 @@
 #!/bin/sh
 REPO="https://github.com/AdguardTeam/dnsproxy"
-CMDS=$(type -P {aria2c,curl,wget})
+CMDS=$(type -P {curl,wget})
 DIR="/opt/adguard"
 TMP_DIR=$(mktemp -d)
 url() {
@@ -15,8 +15,6 @@ download() {
   local FILE="dnsproxy-${1}-${LATEST}.tar.gz"
   local URL="${REPO}/releases/download/${LATEST}/${FILE}"
   case "$CMDS" in
-    *aria2c*)
-    aria2c $URL -d "$TMP_DIR" -o "$FILE" -j5 -x10 -s8 -k1M --optimize-concurrent-downloads --header="Accept-Encoding: zstd, gzip, deflate";;
     *curl*)
     curl -L $URL -o "$TMP_DIR/$FILE" --compressed -H "Accept-Encoding: zstd, gzip, deflate";;
     *wget*)
