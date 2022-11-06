@@ -16,6 +16,8 @@ Restart=always
 RestartSec=0
 WorkingDirectory=/run/dnsproxy
 RuntimeDirectory=dnsproxy
+MemoryAccounting=yes
+MemoryMax=800M
 
 [Install]
 WantedBy=multi-user.target
