@@ -7,7 +7,7 @@
 http3: yes
 upstream: 
   - "h3://anycast.dns.nextdns.io"
-  - "https://dns.secarchlab.net/dns-query"
+  - "h3://freedns.controld.com/uncensored"
   - "https://resolver2.dns.watch/dns-query"
 fallback: 
   - "https://anycast.uncensoreddns.org/dns-query"
