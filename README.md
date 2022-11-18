@@ -22,8 +22,6 @@ After cloning this repository, run the command below to download and start up th
 make
 ```
 
-
-
 Using `sudo` is optional since the Makefile already checks for admin access.
 
 Admin access is need to be permitted to bind IP addresses for listening.
@@ -60,6 +58,16 @@ man 'resolv.conf(5)'
 ```
 
 > The helper script use this resolv.conf file to append to the actual **`/etc/resolv.conf`** for DNS resolution to work especially after boot up.
+
+Make sure any IP addresses in this configuration file are not already used on port 53.
+
+Check for IP address on port 53 with this command.
+
+```shell
+sudo lsof -Pni:53
+```
+
+> This command will need `sudo` privileges.
 
 ## UDP Receive Buffer Size
 
