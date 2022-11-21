@@ -5,7 +5,6 @@ define setup_files
 	@$(1) -m744 dnsproxy-helper.sh $(2)
 	@$(1) -m744 dnsproxy-setup.sh $(2)
 	@$(1) -m644 dnsproxy.yml $(3)
-	@$(1) -m644 resolv.conf $(3)
 endef
 
 define service_files

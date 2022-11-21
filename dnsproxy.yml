@@ -4,19 +4,21 @@
 # option.  Any other command-line options specified will override the values
 # from the config file.
 ---
+listen-addrs:
+  - "127.0.1.1"
 http3: yes
-upstream: 
+upstream:
   - "h3://anycast.dns.nextdns.io"
   - "h3://freedns.controld.com/uncensored"
   - "https://resolver2.dns.watch/dns-query"
-fallback: 
+fallback:
   - "https://anycast.uncensoreddns.org/dns-query"
   - "https://doh.dns.sb/dns-query"
   - "https://doh.mullvad.net/dns-query"
   - "https://dns.digitale-gesellschaft.ch/dns-query"
   - "https://dns.dnswarden.com/uncensored"
   - "https://odvr.nic.cz/dns-query"
-bootstrap: 
+bootstrap:
   - "80.80.80.80:53"
   - "80.80.81.81:53"
 all-servers: yes

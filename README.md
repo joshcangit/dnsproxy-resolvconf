@@ -10,7 +10,6 @@ Refer to assets in [AdguardTeam/dnsproxy Releases](https://github.com/AdguardTea
 > Examples:
 >
 > - `linux-386` for i386 / x86
->
 > - `linux-arm64` for aarch64 / arm64
 > - `linux-arm6` for armv6l / armhf
 
@@ -45,21 +44,9 @@ Due to certain _file conflicts_, `/etc` and `/usr/sbin` are some of the director
 ## `dnsproxy.yml` file
 Refer to the options in [Adguard/dnsproxy main.go](https://github.com/AdguardTeam/dnsproxy/blob/master/main.go) for yaml configuration.
 
-However, do not set the **`listen-addrs`** option.
+The **`listen-addrs`** option is required.
 
-Listen addresses are set in another **resolv.conf** file.
-
-## `resolv.conf` file
-
-Refer to manual for use.
-
-```shell
-man 'resolv.conf(5)'
-```
-
-> The helper script use this resolv.conf file to append to the actual **`/etc/resolv.conf`** for DNS resolution to work especially after boot up.
-
-Make sure any IP addresses in this configuration file are not already used on port 53.
+Make sure any IP addresses in this option are not already used on port 53.
 
 Check for IP address on port 53 with this command.
 
