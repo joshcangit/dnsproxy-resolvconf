@@ -8,8 +8,9 @@ listen-addrs:
   - "127.0.1.1"
 http3: yes
 upstream:
-  - "h3://anycast.dns.nextdns.io"
+  - "h3://doh3.dns.nextdns.io"
   - "h3://freedns.controld.com/uncensored"
+  - "quic://anycast.dns.nextdns.io"
   - "https://resolver2.dns.watch/dns-query"
 fallback:
   - "https://anycast.uncensoreddns.org/dns-query"
