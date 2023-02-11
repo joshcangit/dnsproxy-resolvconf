@@ -29,6 +29,52 @@ Admin access is need to be permitted to bind IP addresses for listening.
 
 > If you are not in the **`dnsproxy-systemd`** git folder, you may run **`make -C dnsproxy-systemd`** if you have cloned into the current directory.
 
+### Requirement(s)
+
+**Python** is needed for the helper script, _dnsproxy-helper.py_, to work.
+
+#### Using YAML in Python
+
+Python lacks built-in support for the YAML data format.
+
+The helper script checks for either the **`PyYAML`** or **`ruamel.yaml`** Python package.
+
+> Usually, **PyYAML** is already installed.
+>
+> **ruamel.yaml** will be preferred by the helper script.
+>
+> No need to install both packages.
+>
+> The file is not explicit about which version of YAML it is.
+
+- **PyYAML** (YAML 1.1 support)
+
+  - Package on Debian based distros, e.g. Ubuntu
+
+    **`python3-yaml`**
+
+  - Package on RPM based distros, e.g. Fedora
+
+    **`python3-pyyaml`**
+
+  - Package on pacman based distros, e.g. Arch Linux
+
+    **`python-yaml`**
+
+- **ruamel.yaml** (YAML 1.2 support)
+
+  - Package on Debian based distros, e.g. Ubuntu
+  
+    **`python3-ruamel.yaml`**
+  
+  - Package on RPM based distros, e.g. Fedora
+  
+    **`python3-ruamel-yaml`**
+  
+  - Package on pacman based distros, e.g. Arch Linux
+  
+    **`python-ruamel-yaml`**
+
 ### Customization
 
 The Makefile has 2 variables to customize, BINDIR and CONFDIR.
