@@ -8,8 +8,8 @@ Wants=nss-lookup.target
 [Service]
 AmbientCapabilities=CAP_SETPCAP CAP_NET_RAW CAP_NET_BIND_SERVICE
 CapabilityBoundingSet=CAP_SETPCAP CAP_NET_RAW CAP_NET_BIND_SERVICE
-ExecStart=!!/opt/adguard/dnsproxy-helper.sh start
-ExecStop=!!/opt/adguard/dnsproxy-helper.sh stop
+ExecStart=!!/opt/adguard/dnsproxy-helper.pl start
+ExecStop=!!/opt/adguard/dnsproxy-helper.pl stop
 ProtectProc=invisible
 ProtectHome=yes
 Restart=always

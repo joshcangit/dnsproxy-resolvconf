@@ -2,7 +2,7 @@ BINDIR ?= /opt/adguard
 CONFDIR ?= /etc/adguard
 
 define setup_files
-	@$(1) -m744 dnsproxy-helper.sh $(2)
+	@$(1) -m744 dnsproxy-helper.pl $(2)
 	@$(1) -m744 dnsproxy-setup.sh $(2)
 	@$(1) -m644 dnsproxy.yml $(3)
 endef
@@ -27,7 +27,7 @@ ifneq ($(CONFDIR), /etc/adguard)
 ifeq ($(CONFDIR), /etc)
 	$(error "That path is not allowed.")
 endif
-@$(foreach file,$(wildcard *.sh),sed -i "s|/etc/adguard|$(CONFDIR)|g" $(file);)
+@$(foreach file,$(wildcard *.sh *.pl),sed -i "s|/etc/adguard|$(CONFDIR)|g" $(file);)
 endif
 ifeq ($(shell id -u), 0)
 	@mkdir -p $(BINDIR) $(CONFDIR)

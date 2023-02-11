@@ -29,6 +29,52 @@ Admin access is need to be permitted to bind IP addresses for listening.
 
 > If you are not in the **`dnsproxy-systemd`** git folder, you may run **`make -C dnsproxy-systemd`** if you have cloned into the current directory.
 
+### Requirement(s)
+
+**Perl** is needed for the helper script, _dnsproxy-helper.pl_, to work.
+
+#### Using YAML in Perl
+
+Perl has multiple modules to work with the YAML data format.
+
+The helper script checks for either the **`YAML::XS`** or **`YAML::PP`** Perl module.
+
+> Usually, **YAML::XS** is already installed.
+>
+> **YAML::XS** will be preferred by the helper script.
+>
+> No need to install both packages.
+>
+> The file is not explicit about which version of YAML it is.
+
+- **YAML::XS** (YAML 1.1 support)
+
+  - Package on Debian based distros, e.g. Ubuntu
+
+    **`libyaml-libyaml-perl`**
+
+  - Package on RPM based distros, e.g. Fedora
+
+    **`perl-YAML-LibYAML`**
+
+  - Package on pacman based distros, e.g. Arch Linux
+
+    **`perl-yaml-libyaml`**
+
+- **YAML::PP** (YAML 1.2 & 1.1 support)
+
+  - Package on Debian based distros, e.g. Ubuntu
+  
+    **`libyaml-pp-perl`**
+  
+  - Package on RPM based distros, e.g. Fedora
+  
+    **`perl-YAML-PP-LibYAML`**
+  
+  - Package on pacman based distros, e.g. Arch Linux
+  
+    **`perl-yaml-pp`**
+
 ### Customization
 
 The Makefile has 2 variables to customize, BINDIR and CONFDIR.
