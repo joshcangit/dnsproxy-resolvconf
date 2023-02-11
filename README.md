@@ -29,6 +29,12 @@ Admin access is need to be permitted to bind IP addresses for listening.
 
 > If you are not in the **`dnsproxy-systemd`** git folder, you may run **`make -C dnsproxy-systemd`** if you have cloned into the current directory.
 
+### Requirement(s)
+
+**Ruby** is needed for the helper script, _dnsproxy-helper.rb_, to work.
+
+> Ruby is used since it has built-in support for parsing YAML.
+
 ### Customization
 
 The Makefile has 2 variables to customize, BINDIR and CONFDIR.
