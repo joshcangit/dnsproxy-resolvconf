@@ -1,11 +1,11 @@
 BINDIR ?= /opt/adguard
 CONFDIR ?= /etc/adguard
+SYMLINK ?= /usr/local/sbin/dnsp
 
 define setup_files
 	@$(1) -m744 dnsproxy-helper.sh $(2)
 	@$(1) -m744 dnsproxy-setup.sh $(2)
 	@$(1) -m644 dnsproxy.yml $(3)
-	@$(1) -m644 resolv.conf $(3)
 endef
 
 define service_files
@@ -34,21 +34,25 @@ ifeq ($(shell id -u), 0)
 	@mkdir -p $(BINDIR) $(CONFDIR)
 	$(call setup_files,install -p,$(BINDIR),$(CONFDIR))
 	$(call service_files,,install -p -m644,/etc/systemd/system)
+	@ln -sf $(BINDIR)/dnsproxy $(SYMLINK)
 else
 	@sudo mkdir -p $(BINDIR) $(CONFDIR)
 	$(call setup_files,sudo install -p,$(BINDIR),$(CONFDIR))
 	$(call service_files,sudo ,install -p -m644,/etc/systemd/system)
+	@sudo ln -sf $(BINDIR)/dnsproxy $(SYMLINK)
 endif
 
 start:
 ifeq ($(shell id -u), 0)
+	@systemctl enable --now adguard-dnsproxy-setup.service
 	@systemctl enable --now adguard-dnsproxy-setup.timer
-ifdef $(find $(BINDIR) -name dnsproxy)
+ifneq ($(wildcard $(BINDIR)/dnsproxy),)
 	@systemctl enable --now adguard-dnsproxy.service
 endif
 else
+	@sudo systemctl enable --now adguard-dnsproxy-setup.service
 	@sudo systemctl enable --now adguard-dnsproxy-setup.timer
-ifdef $(find $(BINDIR) -name dnsproxy)
+ifneq ($(wildcard $(BINDIR)/dnsproxy),)
 	@sudo systemctl enable --now adguard-dnsproxy.service
 endif
 endif
@@ -66,10 +70,10 @@ endif
 
 uninstall: stop
 ifeq ($(shell id -u), 0)
-	@rm -rf $(BINDIR) $(CONFDIR)
+	@rm -rf $(BINDIR) $(CONFDIR) $(SYMLINK)
 	$(call service_files,,rm -f)
 else
-	@sudo rm -rf $(BINDIR) $(CONFDIR)
+	@sudo rm -rf $(BINDIR) $(CONFDIR) $(SYMLINK)
 	$(call service_files,sudo ,rm -f)
 endif
 

@@ -1,7 +1,7 @@
-# dnsproxy-systemd
+# dnsproxy-resolvconf
 A systemd service for [AdguardTeam/dnsproxy](https://github.com/AdguardTeam/dnsproxy) to provide DNS.
 
-Especially for Ubuntu, it can run alongside systemd-resolved.
+This is for Linux systems installed with the [**`resolvconf`**](https://repology.org/project/resolvconf/) package to modify the `/etc/resolv.conf` file.
 
 The **adguard-dnsproxy-setup.service** uses an argument of **`linux-amd64`** in its `ExecStart` line.
 
@@ -10,7 +10,6 @@ Refer to assets in [AdguardTeam/dnsproxy Releases](https://github.com/AdguardTea
 > Examples:
 >
 > - `linux-386` for i386 / x86
->
 > - `linux-arm64` for aarch64 / arm64
 > - `linux-arm6` for armv6l / armhf
 
@@ -21,8 +20,6 @@ After cloning this repository, run the command below to download and start up th
 ```shell
 make
 ```
-
-
 
 Using `sudo` is optional since the Makefile already checks for admin access.
 
@@ -47,19 +44,25 @@ Due to certain _file conflicts_, `/etc` and `/usr/sbin` are some of the director
 ## `dnsproxy.yml` file
 Refer to the options in [Adguard/dnsproxy main.go](https://github.com/AdguardTeam/dnsproxy/blob/master/main.go) for yaml configuration.
 
-However, do not set the **`listen-addrs`** option.
+The **`listen-addrs`** option is required.
 
-Listen addresses are set in another **resolv.conf** file.
+Make sure **adguard-dnsproxy.service** is stopped when editing this option.
 
-## `resolv.conf` file
+Make sure any IP addresses in this option are not already used on port 53.
 
-Refer to manual for use.
+Check for IP address on port 53 with `ss`, `netstat` or `lsof`.
 
 ```shell
-man 'resolv.conf(5)'
+sudo ss -tnlp | grep :53
 ```
 
-> The helper script use this resolv.conf file to append to the actual **`/etc/resolv.conf`** for DNS resolution to work especially after boot up.
+```shell
+sudo netstat -tnlp | grep :53
+```
+
+```shell
+sudo lsof -Pni:53 -sTCP:LISTEN
+```
 
 ## UDP Receive Buffer Size
 

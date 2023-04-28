@@ -1,17 +1,30 @@
 #!/bin/sh
-cwd=$(dirname $(realpath $0))
-resolv_conf="/etc/adguard/resolv.conf"
-resolv_head="/etc/resolvconf/resolv.conf.d/head"
+dnsproxy="$(dirname $(realpath $0))/dnsproxy"
+yaml="/etc/adguard/dnsproxy.yml"
+resolv_file="/etc/resolvconf/resolv.conf.d/head"
+listen=$(cat $yaml | sed '/^listen-addrs:/,/^.\+:/!d;/:/d' | cut -d\" -f2)
 case "${1}" in
 	start)
-	grep -o '^[^#]*' ${resolv_conf} > ${resolv_head}
-	[ -z $(grep '^options\ edns0$' ${resolv_conf}) ] && echo 'options edns0' >> ${resolv_head}
+	resolv=$(cat $resolv_file)
+	for ip in $listen; do
+		case $resolv in
+			*${ip}*) ;;
+			*) echo "nameserver ${ip}" >> $resolv_file;;
+		esac
+	done
+	[ -z $(grep '^options\ edns0$' $resolv_file) ] && echo 'options edns0' >> $resolv_file
 	resolvconf -u
-	listen=$(grep -o '^[^#]*' ${resolv_conf} | sed 's/^nameserver\ /--listen=/g')
-	${cwd}/dnsproxy ${listen} --config-path=/etc/adguard/dnsproxy.yml
+	$dnsproxy --config-path=$yaml
 	;;
 	stop)
-	> ${resolv_head}
+	killall -9 $dnsproxy
+	resolv=$(cat $resolv_file)
+	for ip in $listen; do
+		case $resolv in
+			*${ip}*) sed -i "/^nameserver.*${ip}$/d" $resolv_file;;
+		esac
+	done
+	sed -i 's/^options\ edns0$//;$ d' $resolv_file
 	resolvconf -u
 	;;
 esac
