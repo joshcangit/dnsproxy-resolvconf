@@ -22,13 +22,13 @@ download() {
   local URL="${REPO}/releases/download/${LATEST}/${FILE}"
   case "$CMDS" in
     *aria2c*)
-    aria2c $URL -d "$TMP_DIR" -o "$FILE" -j5 -x10 -s8 -k1M --optimize-concurrent-downloads --header="Accept-Encoding: zstd, gzip, deflate";;
+    aria2c $URL -d "$TMP_DIR" -o "$FILE" -j5 -x10 -s8 -k1M --optimize-concurrent-downloads --header="Accept-Encoding: zstd, br, gzip, deflate";;
     *xh*)
-    xh -Fd $URL -o "$TMP_DIR/$FILE" Accept-Encoding:'zstd, gzip, deflate';;
+    xh -Fd $URL -o "$TMP_DIR/$FILE" Accept-Encoding:'zstd, br, gzip, deflate';;
     *curl*)
-    curl -L $URL -o "$TMP_DIR/$FILE" --compressed -H "Accept-Encoding: zstd, gzip, deflate";;
+    curl -L $URL -o "$TMP_DIR/$FILE" --compressed -H "Accept-Encoding: zstd, br, gzip, deflate";;
     *wget*)
-    wget $URL -O "$TMP_DIR/$FILE" --header="Accept-Encoding: zstd, gzip, deflate";;
+    wget $URL -O "$TMP_DIR/$FILE" --header="Accept-Encoding: zstd, br, gzip, deflate";;
   esac
   local TPATH=$(tar -ztf $TMP_DIR/$FILE | grep dnsproxy$)
   local RDIR=$(echo $TPATH | sed 's/^\.\///;s/dnsproxy$//')
