@@ -27,7 +27,7 @@ Admin access is need to be permitted to bind IP addresses for listening.
 
 > If you want to run the exact targets, run **`make install start`**.
 
-> If you are not in the **`dnsproxy-systemd`** git folder, you may run **`make -C dnsproxy-systemd`** if you have cloned into the current directory.
+> If you are not in the **`dnsproxy-systemd`** git directory, you may run **`make -C dnsproxy-systemd`** if you have cloned into the current directory.
 
 ### Customization
 
@@ -68,20 +68,37 @@ sudo lsof -Pni:53 -sTCP:LISTEN
 
 Linux and BSD may encounter errors for any QUIC or UDP transfers, especially DNS over QUIC.
 
-This is solved by setting the maximum buffer size to a high enough level.
+This is solved by setting the maximum buffer sizes to a high enough level.
 
-It can be done by using `sysctl -w` or permanently to `/etc/sysctl.conf` as shown below.
+It can be done by using `sysctl -w` or permanently by adding a new file to the `sysctl` directory.
 
 ### Linux
 
+#### Temporarily
+
 ```shell
-sudo sh -c 'echo "net.core.rmem_max=26214400" >> /etc/sysctl.conf'
+sudo sysctl -w net.core.wmem_max=7864320
+sudo sysctl -w net.core.rmem_max=7864320
+```
+
+#### Permanently
+
+```shell
+sudo sh -c 'printf "# Maximum send buffer size\nnet.core.wmem_max=7864320\n# Maximum receive buffer size\nnet.core.rmem_max=7864320" > /etc/sysctl.d/10-max-buffer-size.conf'
 ```
 
 ### BSD
 
+#### Temporarily
+
 ```shell
-sudo sh -c 'echo "kern.ipc.maxsockbuf=30146560" >> /etc/sysctl.conf'
+su -c 'sysctl -w kern.ipc.maxsockbuf=8441037'
 ```
 
-[UDP Receive Buffer Size · lucas-clemente/quic-go Wiki](https://github.com/lucas-clemente/quic-go/wiki/UDP-Receive-Buffer-Size)
+#### Permanently
+
+```shell
+su -c 'printf "# Maximum socket buffer\nkern.ipc.maxsockbuf=8441037" > /etc/sysctl.kld.d/10-max-socket-buffer.conf'
+```
+
+[UDP Buffer Sizes · quic-go/quic-go Wiki](https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes)
