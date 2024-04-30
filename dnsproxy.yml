@@ -8,22 +8,27 @@ listen-addrs:
   - "127.0.1.1"
 http3: yes
 upstream:
-  - "h3://blitz.ahadns.com"
-  - "h3://doh3.dns.nextdns.io"
+  - "h3://blitz.ahadns.com/"
+  - "h3://doh3.dns.nextdns.io/"
   - "h3://freedns.controld.com/uncensored"
   - "quic://anycast.dns.nextdns.io"
-  - "quic://ibksturm.synology.me"
+  - "quic://open.dns0.eu"
 fallback:
   - "https://anycast.uncensoreddns.org/dns-query"
   - "https://doh.dns.sb/dns-query"
-  - "https://doh.mullvad.net/dns-query"
+  - "https://dns.mullvad.net/dns-query"
   - "https://dns.digitale-gesellschaft.ch/dns-query"
-  - "https://dns.dnswarden.com/uncensored"
-  - "https://doh.libredns.gr/dns-query"
+  - "https://doh.applied-privacy.net/query"
+  - "https://snoke.meganerd.nl/dns-query"
+  - "https://doh.seby.io/dns-query"
+  - "https://doh.dns-ga.de/query"
+  - "https://kaitain.restena.lu/dns-query"
   - "https://odvr.nic.cz/dns-query"
 bootstrap:
   - "45.90.28.0:53"
   - "45.90.30.0:53"
+  - "[2a07:a8c0::]:53"
+  - "[2a07:a8c1::]:53"
 all-servers: yes
 cache: yes
 cache-optimistic: yes
