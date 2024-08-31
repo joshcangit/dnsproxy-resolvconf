@@ -12,10 +12,6 @@ case "${1}" in
 			*) echo "nameserver ${ip}" >> $resolv_file;;
 		esac
 	done
-	case "$(grep '^edns:' /etc/adguard/dnsproxy.yml | cut -d' ' -f2)" in
-		"true"|"yes")
-		[ -z $(grep '^options\ edns0$' $resolv_file) ] && echo 'options edns0' >> $resolv_file;;
-	esac
 	resolvconf -u
 	$dnsproxy --config-path=$yaml
 	;;
@@ -27,7 +23,6 @@ case "${1}" in
 			*${ip}*) sed -i "/^nameserver.*${ip}$/d" $resolv_file;;
 		esac
 	done
-	sed -i 's/^options\ edns0$//;$ d' $resolv_file
 	resolvconf -u
 	;;
 esac

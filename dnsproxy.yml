@@ -8,11 +8,13 @@ listen-addrs:
   - "127.0.1.1"
 http3: yes
 upstream:
+  - "h3://0ms.dev/dns-query"
   - "h3://blitz.ahadns.com/"
   - "h3://doh3.dns.nextdns.io/"
-  - "h3://freedns.controld.com/uncensored"
   - "quic://anycast.dns.nextdns.io"
   - "quic://open.dns0.eu"
+  - "quic://p0.freedns.controld.com"
+  - "quic://uncensored.dns.dnswarden.com"
 fallback:
   - "https://anycast.uncensoreddns.org/dns-query"
   - "https://doh.dns.sb/dns-query"
