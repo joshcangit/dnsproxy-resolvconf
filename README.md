@@ -1,6 +1,19 @@
 # dnsproxy-resolvconf
 A systemd service for [AdguardTeam/dnsproxy](https://github.com/AdguardTeam/dnsproxy) to provide DNS.
 
+## For those on newer Ubuntu and Debian distros
+The code relies on `resolvconf` which was deprecated and replaced by `systemd-resolved`.
+
+This is replaced since Ubuntu `22.10`.
+https://launchpad.net/bugs/1990743
+
+This is also replaced for Debian using bullseye-backports, bookworm and onwards.
+
+Since now knowing this is using a deprecated feature, I won't be working on it much longer.
+I think it's best to move on and maybe build another project using a newer method that works.
+
+## For other distros
+
 This is for Linux systems installed with the [**`resolvconf`**](https://repology.org/project/resolvconf/) package to modify the `/etc/resolv.conf` file.
 
 The **adguard-dnsproxy-setup.service** uses an argument of **`linux-amd64`** in its `ExecStart` line.
